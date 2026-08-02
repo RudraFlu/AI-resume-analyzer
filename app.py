@@ -1,6 +1,4 @@
 import streamlit as st
-import pandas as pd
-import os
 from job_matcher import JobMatcher
 from text_cleaner import TextCleaner
 from resume_parser import ResumeParser
@@ -43,21 +41,39 @@ if(resume is not None):
     left,right = st.columns(2)
     with left:
         extractor = SkillExtractor()
-        resume_data = extractor.extract(resume_text,clean_text)
+        resume_data = extractor.extract(clean_text)
         skills_df = resume_data["skills"]
+        llm_data = extractor.analyze_resume(resume_text)
         st.subheader("Current skills")
         st.dataframe(
                     skills_df,
                     use_container_width=True,
                     hide_index=True
                 )
-        edu_df = resume_data["education"]
         st.subheader("Education")
-        st.code("\n".join(edu_df["section"]))
-        projects = resume_data["projects"]
+        for edu in llm_data["Education"]:
+            st.write(f"**Degree:** {edu['Degree']}")
+            st.write(f"**Branch:** {edu['Branch']}")
+            st.write(f"**Institution:** {edu['Institution']}")
+            st.write(f"**Graduation Year:** {edu['Graduation Year']}")
         st.subheader("Projects")
-        st.code("\n".join(projects))
-        
+        for project in llm_data["Projects"]:
+            with st.container(border=True):
+                st.write(project['Project Name'])
+            st.write(project["Description"])
+            if project["Technologies Mentioned"]:
+                st.write("**Technologies:**")
+                st.write(", ".join(project["Technologies Mentioned"]))
+        st.subheader("Experience")
+        if not llm_data["Experience"]:
+            st.info("No experience found.")
+        else:
+            for exp in llm_data["Experience"]:
+                st.markdown(f"### {exp['Role']}")
+                st.write(exp["Company"])
+                st.write(exp["Duration"])
+                for r in exp["Responsibilities"]:
+                    st.write(f"• {r}")
     with right:
         matcher = JobMatcher()
         selected_job=st.selectbox(
@@ -96,5 +112,3 @@ if(resume is not None):
         hide_index=True,
         use_container_width=True
 )
-    llm_output = extractor.analyze_resume(resume_text)
-    st.code(llm_output)

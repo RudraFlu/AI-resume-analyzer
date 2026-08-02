@@ -117,7 +117,7 @@ class SkillExtractor:
         response = self.client.models.generate_content(
             model = self.model,
             contents=prompt)
-        return response.text
+        return json.loads(response.text)
         
             
     def load_dictionary(self):
@@ -237,37 +237,8 @@ class SkillExtractor:
             if line.strip():
                 section.append(line.strip())
         return section
-    def extract_education(self, text):
-        education_lines = self.get_section(
-            text,
-            start_headers=["education"],
-            stop_headers=[
-            h for h in self.SECTION_HEADERS
-            if h != "education"])
-
-        return {
-                "section":education_lines,
-                }
-
-    def extract_projects(self, text):
-        project_lines = self.get_section(
-            text,start_headers=[
-                "projects",
-                "contribution"
-            ],
-            stop_headers=[
-                 h for h in self.SECTION_HEADERS
-            if h not in [
-                "projects",
-                "contribution"
-            ]]
-        )
-        return project_lines
-
-
-    def extract(self, raw_text,clean_text):
+    
+    def extract(self, clean_text):
         return {
             "skills": self.extract_skills(clean_text),
-            "education": self.extract_education(raw_text),
-            "projects": self.extract_projects(raw_text),
         }
