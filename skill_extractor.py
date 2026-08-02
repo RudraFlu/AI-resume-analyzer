@@ -4,6 +4,63 @@ import pandas as pd
 
 
 class SkillExtractor:
+    SECTION_HEADERS = [
+    "contribution",
+    "education",
+    "experience",
+    "work experience",
+    "projects",
+    "skills",
+    "technical skills",
+    "certifications",
+    "achievements",
+    "internships",
+    "positions of responsibility"
+]
+    DEGREES = [
+    "Bachelor of Technology",
+    "B.Tech",
+    "Bachelor of Engineering",
+    "B.E.",
+    "Master of Technology",
+    "M.Tech",
+    "Bachelor of Science",
+    "B.Sc",
+    "Master of Science",
+    "M.Sc",
+    "Bachelor of Computer Applications",
+    "BCA",
+    "Master of Computer Applications",
+    "MCA",
+    "Diploma"
+]
+    COLLEGE_KEYWORDS = [
+    "university",
+    "college",
+    "institute",
+    "school",
+    "academy"
+]
+    BRANCHES = [
+    "Computer Science and Engineering",
+    "Computer Science",
+    "Information Technology",
+    "Artificial Intelligence",
+    "Artificial Intelligence and Machine Learning",
+    "Machine Learning",
+    "Data Science",
+    "Electronics and Communication Engineering",
+    "Electronics Engineering",
+    "Electrical Engineering",
+    "Mechanical Engineering",
+    "Civil Engineering",
+    "Chemical Engineering",
+    "Biotechnology",
+    "Mathematics",
+    "Physics",
+    "Commerce",
+    "Business Administration"
+]
     def __init__(self, path="data/skill_dictionary.csv"):
         self.path = path
         self.skillDf = None
@@ -118,8 +175,34 @@ class SkillExtractor:
 
         return False
 
+    def get_section(self,text,start_headers,stop_headers):
+        lines = text.splitlines()
+        collecting = False
+        section = []
+        start_headers = [h.lower() for h in start_headers]
+        stop_headers = [h.lower() for h in stop_headers]
+        for line in lines:
+            current = line.strip().lower()
+            if not collecting:
+                if current in start_headers:
+                    collecting = True
+                continue
+            if current in stop_headers:
+                break
+            if line.strip():
+                section.append(line.strip())
+        return section
     def extract_education(self, text):
-        ...
+        education_lines = self.get_section(
+            text,
+            start_headers=["education"],
+            stop_headers=[
+            h for h in self.SECTION_HEADERS
+            if h != "education"])
+
+        return {
+                "section":education_lines,
+                }
 
     def extract_projects(self, text):
         ...
@@ -127,10 +210,10 @@ class SkillExtractor:
     def extract_experience(self, text):
         ...
 
-    def extract(self, text):
+    def extract(self, raw_text,clean_text):
         return {
-            "skills": self.extract_skills(text),
-            "education": self.extract_education(text),
-            "projects": self.extract_projects(text),
-            "experience": self.extract_experience(text)
+            "skills": self.extract_skills(clean_text),
+            "education": self.extract_education(raw_text),
+            "projects": self.extract_projects(raw_text),
+            "experience": self.extract_experience(raw_text)
         }
