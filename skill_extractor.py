@@ -205,15 +205,24 @@ class SkillExtractor:
                 }
 
     def extract_projects(self, text):
-        ...
+        project_lines = self.get_section(
+            text,start_headers=[
+                "projects",
+                "contribution"
+            ],
+            stop_headers=[
+                 h for h in self.SECTION_HEADERS
+            if h not in [
+                "projects",
+                "contribution"
+            ]]
+        )
+        return project_lines
 
-    def extract_experience(self, text):
-        ...
 
     def extract(self, raw_text,clean_text):
         return {
             "skills": self.extract_skills(clean_text),
             "education": self.extract_education(raw_text),
             "projects": self.extract_projects(raw_text),
-            "experience": self.extract_experience(raw_text)
         }

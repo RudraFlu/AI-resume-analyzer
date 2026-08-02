@@ -41,19 +41,18 @@ if resume is not None:
 left,right = st.columns(2)
 with left:
     if(resume is not None):
-            extractor = SkillExtractor()
-            resume_data = extractor.extract(resume_text,clean_text)
-            skills_df = resume_data["skills"]
-            st.subheader("Current skills")
-            st.dataframe(
+        extractor = SkillExtractor()
+        resume_data = extractor.extract(resume_text,clean_text)
+        skills_df = resume_data["skills"]
+        st.subheader("Current skills")
+        st.dataframe(
                     skills_df,
                     use_container_width=True,
                     hide_index=True
                 )
-
-with right:
-    if(resume is not None):
-       
         edu_df = resume_data["education"]
         st.subheader("Education")
         st.code("\n".join(edu_df["section"]))
+        projects = resume_data["projects"]
+        st.subheader("Projects")
+        st.code("\n".join(projects))
