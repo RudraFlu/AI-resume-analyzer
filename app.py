@@ -43,12 +43,13 @@ with left:
             )
 
 with right:
-    extractor = SkillExtractor()
-    resume_data = extractor.extract(clean_text)
-    skills_df = resume_data["skills"]
-    st.subheader("Current skills")
-    st.dataframe(
-    skills_df,
-    use_container_width=True,
-    hide_index=True
-)
+    if(resume is not None):
+        extractor = SkillExtractor()
+        resume_data = extractor.extract(clean_text)
+        skills_df = resume_data["skills"]
+        st.subheader("Current skills")
+        st.dataframe(
+        skills_df,
+        use_container_width=True,
+        hide_index=True
+    )

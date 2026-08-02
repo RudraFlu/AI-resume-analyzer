@@ -102,10 +102,7 @@ class SkillExtractor:
 
             detected.append({
             "skill": entry["canonical"],
-            "matched_text": match.group(),
             "category": entry["category"],
-            "start": span[0],
-            "end": span[1]
         })
 
         return pd.DataFrame(detected)
