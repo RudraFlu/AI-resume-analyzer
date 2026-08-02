@@ -1,0 +1,24 @@
+skill,aliases,category
+Python,"python",Programming
+Java,"java",Programming
+C++,"c++",Programming
+C,"c",Programming
+C#,"c#",Programming
+Dart,"dart",Programming
+Flutter,"flutter",Framework
+SQL,"sql",Database
+MySQL,"mysql",Database
+Git,"git",Tools
+GitHub,"github",Tools
+NumPy,"numpy",ML
+Pandas,"pandas",ML
+Machine Learning,"machine learning,ml",AI
+Artificial Intelligence,"artificial intelligence,ai",AI
+Object-Oriented Programming,"object oriented programming,oop,oops",Core
+Data Structures,"data structures,dsa",Core
+Algorithms,"algorithms",Core
+REST API,"rest api,restful api",Backend
+VS Code,"vs code,vscode",Tools
+Jupyter Notebook,"jupyter notebook,jupyter",Tools
+Supabase,"supabase",Cloud
+Firebase,"firebase",Cloud
