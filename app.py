@@ -66,8 +66,6 @@ if(resume is not None):
         )
         st.write("Selected role: ", selected_job)
         skills_list = matcher.prepare_skills(skills_df)
-        doc = matcher.prepare_doc(skills_list)
-        job_doc = matcher.get_job_doc(selected_job)
         recommendations = matcher.recommendation(skills_list)
         top_roles = matcher.top_roles(recommendations)
         match_score = matcher.calc_score(recommendations,selected_job)
@@ -98,4 +96,5 @@ if(resume is not None):
         hide_index=True,
         use_container_width=True
 )
-                
+    llm_output = extractor.analyze_resume(resume_text)
+    st.code(llm_output)

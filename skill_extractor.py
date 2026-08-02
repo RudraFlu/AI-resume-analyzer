@@ -1,8 +1,9 @@
 import re
-
+import os
+import json
 import pandas as pd
-
-
+from google import genai
+from dotenv import load_dotenv
 class SkillExtractor:
     SECTION_HEADERS = [
     "contribution",
@@ -74,7 +75,51 @@ class SkillExtractor:
         self.sort_dictionary()
 
         self.build_patterns()
+        load_dotenv()
+        self.client = genai.Client(
+            api_key=os.getenv("GEMINI_API")
+        )
+        self.model = "gemini-3.5-flash"
+    def analyze_resume(self,text):
+        prompt = f"""
+            You are an AI resume analyzer.
+            Analyze the resume below.
+            Extract the following information:
+            1. Education
+               - Degree
+               - Branch
+               - Institution
+               - Graduation Year
+            2. Projects
+               - Project Name
+               - Description
+               - Technologies Mentioned
+            3. Experience
+               - Company
+               - Role
+               - Duration
+               - Responsibilities
+            summarize the project description
+            Extract ONLY information that is explicitly present in the resume.
+            Do NOT infer technologies, programming languages, frameworks, dates, companies, or responsibilities.
+            If a piece of information is not explicitly mentioned, return an empty string or an empty list.
+            Preserve original wording as much as possible.
+            Return ONLY valid JSON.
+            Do not use markdown.
+            Do not write explanations.
+            Never guess.
+            Never hallucinate.
+            Never complete missing information.
+            Do not wrap the JSON in ```.
+            Resume:
+            {text}
+            """
+        response = self.client.models.generate_content(
+            model = self.model,
+            contents=prompt)
+        return response.text
         
+            
     def load_dictionary(self):
 
         self.skill_df = pd.read_csv(self.path)
