@@ -121,3 +121,12 @@ if(resume is not None):
         )
         st.subheader("Roadmap")
         st.markdown(roadmap)
+    feedback=extractor.review_resume(
+        resume_text,
+        selected_job,
+        match_score,
+        found,
+        missing
+    )
+    st.subheader("AI Resume review")
+    st.markdown(feedback)

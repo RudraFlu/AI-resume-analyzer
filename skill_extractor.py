@@ -118,7 +118,47 @@ class SkillExtractor:
             model = self.model,
             contents=prompt)
         return json.loads(response.text)
-        
+    def review_resume(
+        self,
+        resume_text,
+        target_role,
+        match_score,
+        found_skills,
+        missing_skills
+    ):
+        prompt = f"""
+        You are an experienced technical recruiter and ATS resume reviewer.
+        Review the following resume for the target role.
+        Target Role:
+        {target_role}
+        Current Match Score:
+        {match_score}%
+        Skills Found:
+        {", ".join(sorted(found_skills))}
+        Missing Skills:
+        {", ".join(sorted(missing_skills))}
+        Resume:
+        {resume_text}
+        Instructions:
+        Provide feedback under EXACTLY these headings:
+        ## Resume Strengths
+        ## Areas to Improve
+        ## ATS Optimization Tips
+        ## Overall Recommendation
+
+        Rules:
+        - Be constructive and specific.
+        - Do not invent experiences or skills.
+        - Base comments only on the resume.
+        - Mention missing skills only if they are relevant to the target role.
+        - Keep the response concise.
+        - Return Markdown only.
+        """
+        response = self.client.models.generate_content(
+            model=self.model,
+            contents=prompt
+        )
+        return response
             
     def load_dictionary(self):
 
