@@ -1,5 +1,6 @@
 import streamlit as st
 from job_matcher import JobMatcher
+from roadmap_generator import RoadmapGenerator
 from text_cleaner import TextCleaner
 from resume_parser import ResumeParser
 from skill_extractor import SkillExtractor
@@ -87,6 +88,7 @@ if(resume is not None):
         match_score = matcher.calc_score(recommendations,selected_job)
         res_skill = matcher.get_res_skills(resume_data['skills'])
         job_skill=matcher.get_job_skills(selected_job)
+        roadmap_generator = RoadmapGenerator()
         found, missing = matcher.comp_skills(
             res_skill,job_skill
         )
@@ -112,3 +114,10 @@ if(resume is not None):
         hide_index=True,
         use_container_width=True
 )
+        roadmap= roadmap_generator.generate_roadmap(
+            target_role=selected_job,
+            curr_skills=res_skill,
+            miss_skills=missing
+        )
+        st.subheader("Roadmap")
+        st.markdown(roadmap)
