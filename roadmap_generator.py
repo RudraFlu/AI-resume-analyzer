@@ -8,7 +8,7 @@ class RoadmapGenerator:
         self.client = genai.Client(
         api_key=os.getenv("GEMINI_API")
                 )
-        self.model = "gemini-3.5-flash"
+        self.model = "gemini-3.1-flash-lite"
     def generate_roadmap(
         self,
         target_role,

@@ -1,24 +1,140 @@
 skill,aliases,category
-Python,"python",Programming
+Python,"python,py",Programming
 Java,"java",Programming
-C++,"c++",Programming
 C,"c",Programming
-C#,"c#",Programming
+C++,"c++,cpp",Programming
+C#,"c#,csharp",Programming
+JavaScript,"javascript,js",Programming
+TypeScript,"typescript,ts",Programming
+Go,"go,golang",Programming
+Rust,"rust",Programming
+Kotlin,"kotlin",Programming
+Swift,"swift",Programming
 Dart,"dart",Programming
-Flutter,"flutter",Framework
+PHP,"php",Programming
+Ruby,"ruby",Programming
+R,"r language,r",Programming
+MATLAB,"matlab",Programming
+Scala,"scala",Programming
+Perl,"perl",Programming
+Shell,"shell,bash",Programming
+Bash,"bash",Programming
+HTML,"html,html5",Web
+CSS,"css,css3",Web
+Bootstrap,"bootstrap",Frontend
+Tailwind CSS,"tailwind,tailwind css",Frontend
+React,"react,reactjs",Frontend
+Next.js,"next,nextjs",Frontend
+Angular,"angular",Frontend
+Vue.js,"vue,vuejs",Frontend
+Svelte,"svelte",Frontend
+Flutter,"flutter",Mobile
+React Native,"react native",Mobile
+Android,"android",Mobile
+Android Studio,"android studio",Mobile
+XML,"xml",Markup
+JSON,"json",Markup
+YAML,"yaml",Markup
+REST API,"rest api,restful api",Backend
+FastAPI,"fastapi",Backend
+Flask,"flask",Backend
+Django,"django",Backend
+Node.js,"node,nodejs",Backend
+Express.js,"express,expressjs",Backend
+Spring Boot,"spring boot",Backend
+ASP.NET,"asp.net,.net",Backend
 SQL,"sql",Database
 MySQL,"mysql",Database
-Git,"git",Tools
-GitHub,"github",Tools
-NumPy,"numpy",ML
-Pandas,"pandas",ML
+PostgreSQL,"postgresql,postgres",Database
+SQLite,"sqlite",Database
+Oracle,"oracle sql,oracle",Database
+SQL Server,"sql server,mssql",Database
+MongoDB,"mongodb,mongo",Database
+Redis,"redis",Database
+Firebase,"firebase",Database
+Supabase,"supabase",Database
+Pandas,"pandas,pd",Data Science
+NumPy,"numpy,np",Data Science
+SciPy,"scipy",Data Science
+Matplotlib,"matplotlib",Visualization
+Seaborn,"seaborn",Visualization
+Plotly,"plotly",Visualization
+OpenCV,"opencv,cv2",Computer Vision
+Scikit-learn,"scikit-learn,sklearn",Machine Learning
+TensorFlow,"tensorflow,tf",Deep Learning
+Keras,"keras",Deep Learning
+PyTorch,"pytorch,torch",Deep Learning
+XGBoost,"xgboost",Machine Learning
+LightGBM,"lightgbm",Machine Learning
+CatBoost,"catboost",Machine Learning
+Statsmodels,"statsmodels",Data Science
+Jupyter Notebook,"jupyter,jupyter notebook",Tool
+Google Colab,"google colab,colab",Tool
+Anaconda,"anaconda",Tool
+Git,"git",Version Control
+GitHub,"github",Version Control
+GitLab,"gitlab",Version Control
+Docker,"docker",DevOps
+Kubernetes,"kubernetes,k8s",DevOps
+Jenkins,"jenkins",DevOps
+GitHub Actions,"github actions",DevOps
+MLflow,"mlflow",MLOps
+DVC,"dvc,data version control",MLOps
+Apache Airflow,"airflow,apache airflow",Data Engineering
+Apache Spark,"spark,apache spark",Big Data
+Hadoop,"hadoop",Big Data
+Kafka,"kafka,apache kafka",Big Data
+Hive,"hive,apache hive",Big Data
+Power BI,"power bi,powerbi",Visualization
+Tableau,"tableau",Visualization
+Excel,"excel,microsoft excel",Visualization
+AWS,"aws,amazon web services",Cloud
+Microsoft Azure,"azure,microsoft azure",Cloud
+Google Cloud Platform,"gcp,google cloud",Cloud
+Azure ML,"azure ml",Cloud
+SageMaker,"sagemaker",Cloud
+Linux,"linux",Operating System
+Ubuntu,"ubuntu",Operating System
+Windows,"windows",Operating System
+macOS,"macos",Operating System
+NLP,"natural language processing,nlp",AI
+NLTK,"nltk",NLP
+spaCy,"spacy",NLP
+TextBlob,"textblob",NLP
+Gensim,"gensim",NLP
+Transformers,"transformers,huggingface transformers",NLP
+Hugging Face,"hugging face,huggingface",NLP
+Sentence Transformers,"sentence transformers,sentence-transformers",NLP
+LangChain,"langchain",LLM
+LlamaIndex,"llamaindex",LLM
+OpenAI API,"openai api,openai",LLM
+Gemini API,"gemini api,google gemini",LLM
+Prompt Engineering,"prompt engineering",LLM
+RAG,"retrieval augmented generation,rag",LLM
+FAISS,"faiss",Vector Database
+ChromaDB,"chromadb,chroma",Vector Database
+Pinecone,"pinecone",Vector Database
+Weaviate,"weaviate",Vector Database
+OCR,"ocr,optical character recognition",Computer Vision
+YOLO,"yolo,yolov8",Computer Vision
+CNN,"cnn,convolutional neural network",Deep Learning
+RNN,"rnn,recurrent neural network",Deep Learning
+LSTM,"lstm",Deep Learning
+GRU,"gru",Deep Learning
+GAN,"gan,generative adversarial network",Deep Learning
+BERT,"bert",NLP
+RoBERTa,"roberta",NLP
+GPT,"gpt,generative pretrained transformer",LLM
+Computer Vision,"computer vision",AI
+Deep Learning,"deep learning",AI
 Machine Learning,"machine learning,ml",AI
-Artificial Intelligence,"artificial intelligence,ai",AI
-Object-Oriented Programming,"object oriented programming,oop,oops",Core
-Data Structures,"data structures,dsa",Core
-Algorithms,"algorithms",Core
-REST API,"rest api,restful api",Backend
-VS Code,"vs code,vscode",Tools
-Jupyter Notebook,"jupyter notebook,jupyter",Tools
-Supabase,"supabase",Cloud
-Firebase,"firebase",Cloud
+Data Analysis,"data analysis",Data Science
+Data Visualization,"data visualization",Data Science
+Data Cleaning,"data cleaning",Data Science
+Feature Engineering,"feature engineering",Machine Learning
+EDA,"exploratory data analysis,eda",Data Science
+Regression,"regression",Machine Learning
+Classification,"classification",Machine Learning
+Clustering,"clustering",Machine Learning
+Time Series,"time series",Machine Learning
+Recommendation Systems,"recommendation systems,recommender systems",Machine Learning

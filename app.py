@@ -1,5 +1,6 @@
 import streamlit as st
 from job_matcher import JobMatcher
+from report_generator import ReportGenerator
 from roadmap_generator import RoadmapGenerator
 from text_cleaner import TextCleaner
 from resume_parser import ResumeParser
@@ -13,17 +14,27 @@ left, centre, right = st.columns([1,2,1])
 with centre:
     st.title("AI Resume Analyser")
     st.write("Upload your resume to get started")
-    
+matcher = JobMatcher()  
 resume=st.file_uploader(
         label="your resume goes here",
         type=["pdf","docx"],
         accept_multiple_files=False
     )
+selected_job=st.selectbox(
+            "Select target role",
+            matcher.jobs_df['job'].tolist()
+        )
+custom_jd = st.text_area(
+       "Or paste a Job Description (Optional)",
+        height=250,
+        placeholder="Paste the job description here..."
+        ) 
 if resume is not None:
     parser = ResumeParser()
-    
-    resume_text = parser.extract(resume)
-    
+    try:
+        resume_text = parser.extract(resume)
+    except Exception as e:
+        st.error(f"Unable to read resume: {e}")
     cleaner = TextCleaner()
     clean_text = cleaner.clean(resume_text)
     st.success("Resume uploaded successfully!")
@@ -52,6 +63,7 @@ if(resume is not None):
                     hide_index=True
                 )
         st.subheader("Education")
+        
         for edu in llm_data["Education"]:
             st.write(f"**Degree:** {edu['Degree']}")
             st.write(f"**Branch:** {edu['Branch']}")
@@ -75,19 +87,30 @@ if(resume is not None):
                 st.write(exp["Duration"])
                 for r in exp["Responsibilities"]:
                     st.write(f"• {r}")
+                    
     with right:
-        matcher = JobMatcher()
-        selected_job=st.selectbox(
-            "Select target role",
-            matcher.jobs_df['job'].tolist()
-        )
-        st.write("Selected role: ", selected_job)
         skills_list = matcher.prepare_skills(skills_df)
         recommendations = matcher.recommendation(skills_list)
         top_roles = matcher.top_roles(recommendations)
-        match_score = matcher.calc_score(recommendations,selected_job)
-        res_skill = matcher.get_res_skills(resume_data['skills'])
-        job_skill=matcher.get_job_skills(selected_job)
+        res_skill = set(
+    skills_df["skill"]
+)
+        if custom_jd.strip():
+            clean_jd = cleaner.clean(custom_jd)
+            jd_df = extractor.extract_skills(clean_jd)
+            job_skill = set(
+    jd_df["skill"]
+)
+            jd_docs=matcher.prepare_skills(jd_df)
+            print("Resume Document:")
+            print(skills_list)
+
+            print("\nJob Document:")
+            print(jd_docs)
+            match_score = matcher.calc_custom_score(skills_list,jd_docs)
+        else:
+            match_score = matcher.calc_score(recommendations,selected_job)
+            job_skill=matcher.get_job_skills(selected_job)
         roadmap_generator = RoadmapGenerator()
         found, missing = matcher.comp_skills(
             res_skill,job_skill
@@ -114,6 +137,7 @@ if(resume is not None):
         hide_index=True,
         use_container_width=True
 )
+        
         roadmap= roadmap_generator.generate_roadmap(
             target_role=selected_job,
             curr_skills=res_skill,
@@ -130,3 +154,28 @@ if(resume is not None):
     )
     st.subheader("AI Resume review")
     st.markdown(feedback)
+    
+    analysis = {
+    "target_role": selected_job,
+    "match_score": match_score,
+    "skills_found": list(found),
+    "missing_skills": list(missing),
+    "recommendations": recommendations,
+    "education": llm_data.get("Education", []),
+    "projects": llm_data.get("Projects", []),
+    "experience": llm_data.get("Experience", []),
+    "roadmap": roadmap,
+    "resume_feedback": feedback
+}
+    
+    generator = ReportGenerator()
+    pdf = generator.generate(
+    analysis
+)
+    with open(pdf,"rb") as file:
+        st.download_button(
+        "Download Report",
+        file,
+        file_name="Resume_analysis_report.pdf",
+        mime="application/pdf"
+    )

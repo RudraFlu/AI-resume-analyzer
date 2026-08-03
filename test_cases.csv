@@ -1,0 +1,4 @@
+test_resumes,problems_found,solved
+Resume_A, "extracting skills names separately eg. extracting Power and Bi saperately","Problem found in job_roles.csv,TF-IDF saperated using space as a separator separating power and bi, an llm model can be used for better accuracy" 
+Resume_B, "cannot extract skills such as AWS or Scikit-learn","Problem found in job_roles.csv,TF-IDF saperated using space as a separator, an llm model can be used for better accuracy"
+Resume_C, "similar issues found with Resume_C, cannot extract pytorch and reading hugging and face separately","Problem found in job_roles.csv,TF-IDF saperated using space as a separator, an llm model can be used for better accuracy"

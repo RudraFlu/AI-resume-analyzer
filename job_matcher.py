@@ -11,10 +11,11 @@ class JobMatcher:
         jobs['skills']=jobs['skills'].fillna("").str.strip()
         return jobs
     def prepare_skills(self, skills):
-        if skills.empty:
-            return ""
-        skills_list = skills['skill'].tolist()
-        return " ".join(skills_list)
+        skills = [
+        skill.replace(" ", "_")
+        for skill in skills["skill"]
+    ]
+        return " ".join(skills)
     def prepare_doc(self,skills_list):
         doc = [skills_list]
         doc.extend(
@@ -32,6 +33,8 @@ class JobMatcher:
         if job.empty:
             return ""
         return job.iloc[0]["skills"]
+    def normalize(skill):
+        return skill.replace(" ", "_")
     def calc_similarity(self, vectors):
         res_vec=vectors[0]
         job_vec = vectors[1:]
@@ -39,6 +42,18 @@ class JobMatcher:
             res_vec,job_vec
         )[0]
         return sim_score
+    def calc_custom_score(self,res_doc,jd_doc):
+        doc =[
+            res_doc,
+            jd_doc
+        ]
+        vector = self.vectorize_doc(doc)
+        score = cosine_similarity(
+    vector[0],
+    vector[1]
+)[0][0]
+
+        return round(score * 100, 2)
     def calc_score(self,recommendation,job):
         sim_score = recommendation.loc[
             recommendation["job"] == job,
@@ -55,11 +70,20 @@ class JobMatcher:
             return set()
         skills = job.iloc[0]['skills']
         return set(skills.split())
-    def get_res_skills(self,skills_df):
-        return set(skills_df["skill"].tolist())
     def comp_skills(self,res,job):
+        res = {skill.replace(" ", "_") for skill in res}
+        job = {skill.replace(" ", "_") for skill in job}
         found = res & job
         missing = job - res
+        found = {
+        skill.replace("_", " ")
+        for skill in found
+}
+
+        missing = {
+        skill.replace("_", " ")
+    for skill in missing
+}
         return found, missing
     def recommendation(self,res_doc):
         doc = self.prepare_doc(res_doc)

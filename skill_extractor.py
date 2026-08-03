@@ -79,7 +79,7 @@ class SkillExtractor:
         self.client = genai.Client(
             api_key=os.getenv("GEMINI_API")
         )
-        self.model = "gemini-3.5-flash"
+        self.model = "gemini-3.1-flash-lite"
     def analyze_resume(self,text):
         prompt = f"""
             You are an AI resume analyzer.
@@ -154,11 +154,14 @@ class SkillExtractor:
         - Keep the response concise.
         - Return Markdown only.
         """
-        response = self.client.models.generate_content(
+        try:
+            response = self.client.models.generate_content(
             model=self.model,
             contents=prompt
         )
-        return response
+        except Exception as e:
+            print(e)
+        return response.text
             
     def load_dictionary(self):
 
