@@ -101,61 +101,62 @@ Exports a complete Resume Analysis Report in PDF format.
 
 # Project Architecture
 
+```text
+                    Resume (PDF)
+                          │
+                          ▼
+                 Resume Text Extractor
+                          │
+                          ▼
+                 Text Preprocessing
+                          │
+        ┌─────────────────┴─────────────────┐
+        │                                   │
+        ▼                                   ▼
+  Rule-Based NLP                     Gemini LLM
+        │                                   │
+        │                                   ├── Education Extraction
+        │                                   ├── Project Extraction
+        │                                   └── Experience Extraction
+        │
+        ▼
+   Skill Dictionary
+        │
+        ▼
+   Skill Extraction
+        │
+        ├───────────────┐
+        │               │
+        ▼               ▼
+ Resume Skills     Custom Job Description
+        │               │
+        │         Skill Extraction
+        │               │
+        └───────┬───────┘
+                │
+                ▼
+        Job Matching Engine
+      (TF-IDF + Cosine Similarity)
+                │
+      ┌─────────┴─────────┐
+      │                   │
+      ▼                   ▼
+Role Recommendation   Skill Gap Analysis
+      │                   │
+      └─────────┬─────────┘
+                │
+                ▼
+      Gemini Roadmap Generator
+                │
+                ▼
+      Gemini Resume Reviewer
+                │
+                ▼
+        PDF Report Generator
+                │
+                ▼
+           Streamlit Interface
 ```
-                   Resume (PDF)
-
-                        │
-                        ▼
-
-                Resume Parser
-
-                        │
-                        ▼
-
-               Text Preprocessing
-
-                        │
-        ┌───────────────┴────────────────┐
-        │                                │
-
-        ▼                                ▼
-
- Rule-Based NLP                   Gemini LLM
-
- Skill Extraction           Project Extraction
-
- Education Parsing       Experience Extraction
-
-        │                                │
-        └───────────────┬────────────────┘
-                        │
-                        ▼
-
-              Job Matching Engine
-
-        TF-IDF + Cosine Similarity
-
-                        │
-                        ▼
-
-             Skill Gap Analysis
-
-                        │
-                        ▼
-
-          AI Roadmap Generator
-
-                        │
-                        ▼
-
-          AI Resume Reviewer
-
-                        │
-                        ▼
-
-            PDF Report Generator
-```
-
 ---
 
 # Folder Structure
